@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scoring Interne — SWFORMATION</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="header"><div class="container" style="padding:0"><h1>Scoring interne</h1></div></header>
+<main class="container">
+  <div class="card" id="lockCard">
+    <h2>Accès protégé</h2>
+    <p>Entrer le PIN pour accéder (4 chiffres).</p>
+    <input id="pin" maxlength="4" placeholder="PIN 1204">
+    <div style="margin-top:10px"><button class="btn" onclick="unlock()">Déverrouiller</button></div>
+    <small class="helper">Protection légère (client-side). Pour usage interne uniquement.</small>
+  </div>
+
+  <div class="card" id="scoringCard" style="display:none">
+    <form action="https://formspree.io/f/xpwjvnaw" method="POST" id="scoreForm">
+      <div class="grid two">
+        <div>
+          <label>Nom du candidat</label><input name="candidat" required>
+        </div>
+        <div>
+          <label>Discipline</label>
+          <select name="discipline" required>
+            <option>Madérothérapie</option>
+            <option>Sportif</option>
+            <option>Drainage lymphatique Sonia Well</option>
+            <option>Kobido</option>
+            <option>Réflexologie</option>
+          </select>
+        </div>
+      </div>
+
+      <h3>Notes (0 à 5)</h3>
+      <div class="grid two">
+        <div><label>Motivation</label><input type="number" min="0" max="5" step="1" value="0" name="motivation" class="noteField"></div>
+        <div><label>Projet</label><input type="number" min="0" max="5" step="1" value="0" name="projet" class="noteField"></div>
+        <div><label>Expérience</label><input type="number" min="0" max="5" step="1" value="0" name="experience" class="noteField"></div>
+        <div><label>Disponibilité</label><input type="number" min="0" max="5" step="1" value="0" name="dispo" class="noteField"></div>
+        <div><label>Potentiel</label><input type="number" min="0" max="5" step="1" value="0" name="potentiel" class="noteField"></div>
+      </div>
+
+      <div class="note" style="margin-top:12px">
+        <div><strong>Total :</strong> <span id="total">0</span> / 25</div>
+        <div><strong>Suggestion :</strong> <span id="suggestion">—</span></div>
+      </div>
+
+      <label>Commentaires</label>
+      <textarea name="commentaires" rows="3" placeholder="Notes sur le profil, points forts, réserves…"></textarea>
+
+      <input type="hidden" name="_subject" value="Scoring Interne SWFORMATION">
+      <input type="hidden" name="_origin" value="scoring-interne.html">
+
+      <div style="margin-top:12px">
+        <button class="btn" type="submit">Envoyer le scoring</button>
+      </div>
+    </form>
+  </div>
+</main>
+<footer class="footer"><span>© SWFORMATION</span><span>Footer by AW</span></footer>
+
+<script>
+  function unlock(){
+    const pin = document.getElementById('pin').value.trim();
+    if(pin === '1204'){
+      document.getElementById('lockCard').style.display='none';
+      document.getElementById('scoringCard').style.display='block';
+    }else{
+      alert('PIN incorrect.');
+    }
+  }
+  function compute(){
+    const fields = document.querySelectorAll('.noteField');
+    let s = 0;
+    fields.forEach(f => { s += parseInt(f.value||0, 10); });
+    document.getElementById('total').textContent = s;
+    let sug = '—';
+    if(s >= 20) sug = 'Admis';
+    else if(s >= 15) sug = 'Liste d’attente';
+    else sug = 'Refus';
+    document.getElementById('suggestion').textContent = sug;
+  }
+  document.querySelectorAll('.noteField').forEach(el => el.addEventListener('input', compute));
+  compute();
+</script>
+</body>
+</html>

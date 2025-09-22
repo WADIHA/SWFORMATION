@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pré-inscription — SWFORMATION</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<meta name="description" content="Formulaire de pré-inscription — Sonia Well Formation">
+</head>
+<body>
+  <header class="header">
+    <div class="container" style="padding:0">
+      <h1>SWFORMATION <span class="badge">Pré-inscription</span></h1>
+      <ul class="inline">
+        <li><a href="./confidentialite.html">Confidentialité RGPD</a></li>
+        <li><a href="./cgv.md">CGV</a></li>
+        <li><a href="./scoring-interne.html">Scoring interne</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>Votre projet</h2>
+      <form action="https://formspree.io/f/xzzanonl" method="POST" id="preinscriptionForm">
+        <div class="grid two">
+          <div>
+            <label>Prénom et Nom</label>
+            <input name="nom" required>
+          </div>
+          <div>
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div>
+            <label>Téléphone</label>
+            <input type="tel" name="tel" required>
+          </div>
+          <div>
+            <label>Ville / Pays</label>
+            <input name="ville">
+          </div>
+        </div>
+
+        <label>Besoin (Qualiopi) — objectif de la formation</label>
+        <textarea name="besoin" rows="3" placeholder="Décrivez votre besoin et votre objectif…"></textarea>
+
+        <label>Motivation / Projet</label>
+        <textarea name="motivation" rows="3" placeholder="Dites-nous ce qui vous motive et votre projet pro…"></textarea>
+
+        <div class="grid two">
+          <div>
+            <label>Discipline</label>
+            <select name="discipline" id="discipline" required>
+              <option value="">— Choisir —</option>
+              <option>Madérothérapie</option>
+              <option>Sportif</option>
+              <option>Drainage lymphatique Sonia Well</option>
+              <option>Kobido</option>
+              <option>Réflexologie</option>
+            </select>
+          </div>
+          <div>
+            <label>Niveau</label>
+            <select name="niveau" id="niveau" required>
+              <option value="">— Choisir —</option>
+              <option value="N1">N1</option>
+              <option value="N2">N2</option>
+              <option value="N3">N3</option>
+            </select>
+            <small id="prerequis" class="helper"></small>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Date souhaitée</label>
+            <select name="date">
+              <option>Liste d’attente</option>
+              <option>17 novembre</option>
+              <option>Flexible</option>
+            </select>
+          </div>
+          <div>
+            <label>Déjà une expérience ?</label>
+            <select name="experience">
+              <option>Débutant</option>
+              <option>Intermédiaire</option>
+              <option>Avancé</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:12px">
+          <strong>Déposer vos documents (optionnel maintenant) :</strong>
+          <div style="margin-top:6px">
+            <a class="button alt" id="dropboxLink" href="#" target="_blank" rel="noopener">Déposer mes documents</a>
+          </div>
+          <small class="helper">Pièce d’identité, CV, attestations.</small>
+        </div>
+
+        <input type="hidden" name="_subject" value="Nouvelle pré-inscription SWFORMATION">
+        <input type="hidden" name="_origin" value="SWFORMATION index.html">
+
+        <div style="margin-top:18px">
+          <button type="submit" class="btn">Envoyer ma pré-inscription</button>
+          <small class="helper">Vous serez redirigé vers la page “merci”.</small>
+        </div>
+      </form>
+    </div>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Programmes par discipline</h2>
+      <div class="grid two">
+        <a href="./formations/maderotherapie-n1.html">Madérothérapie N1</a>
+        <a href="./formations/sportif-n1.html">Sportif N1</a>
+        <a href="./formations/drainage-n1.html">Drainage lymphatique Sonia Well N1</a>
+        <a href="./formations/kobido-n1.html">Kobido N1</a>
+        <a href="./formations/reflexologie-n1.html">Réflexologie N1</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2025 SWFORMATION</span>
+    <span>Footer by AW</span>
+  </footer>
+
+<script>
+  // Redirection après soumission
+  document.getElementById('preinscriptionForm').addEventListener('submit', function(e){
+    // Allow formspree to handle submission, then redirect using a small delay
+    setTimeout(function(){ window.location.href = './merci.html'; }, 400);
+  });
+
+  // Prérequis dynamiques
+  const prereq = {
+    "N1":"Accessible à tous. Aucun prérequis.",
+    "N2":"Prérequis : N1 acquis + pratique régulière (ou expérience équivalente).",
+    "N3":"Prérequis : N2 validé + 6 mois d’expérience continue."
+  };
+  document.getElementById('niveau').addEventListener('change', function(){
+    document.getElementById('prerequis').textContent = prereq[this.value] || "";
+  });
+
+  // Lien Dropbox configurable (placeholder)
+  const DROPBOX_URL = "https://www.dropbox.com/request/XXXX";
+  document.getElementById('dropboxLink').href = DROPBOX_URL;
+</script>
+</body>
+</html>
